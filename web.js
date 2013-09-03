@@ -5,16 +5,18 @@ var async   = require('async')
   , https   = require('https');
 
 var app = express();
-app.set('public',__dirname + '/public');
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
+//app.set('public',__dirname + '/public');
+//app.set('views', __dirname + '/views');
+//app.set('view engine', 'ejs');
+
+app.use('/public', express.static(__dirname + "/public"));
 
 app.configure(function() {
   console.log("Configuring");
   app.use(express.bodyParser());
 });
 
+var home = fs.readFileSync("index.html", "utf-8");
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
@@ -23,7 +25,7 @@ app.listen(port, function() {
 
 app.get('/', function(request, response) {
   var data = fs.readFileSync('index.html').toString();
-  response.send(data);
+  response.send(home);
 
 });
 
